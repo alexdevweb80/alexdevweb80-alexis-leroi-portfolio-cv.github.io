@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEXD // CYBER_CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Orbitron:wght@400..900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="cursor"></div>
+    <!-- LOADING SCREEN -->
+
+
+    <div class="overlay-grid"></div>
+
+    <header>
+        <div class="logo">
+            LEROI_ALEXIS />
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#experience">EXP</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION (Background Image Here) -->
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <span class="subtitle">> SYSTEM_STATUS: LEARNING_MODE</span>
+                <h1 class="glitch-large">Alexis leroi.</h1>
+                <h2 class="subtitle">ETUDIANT DEVELOPPEUR WEB</h2>
+                <p>En route pour apprendre le dévoleppement web <br>J'apprends, je code, je crée.</p>
+                <br>
+                <a href="#contact" class="btn-cyber">CONTACT ME</a>
+                <a href="#" class="btn-cyber outline">DOWNLOAD CV</a>
+            </div>
+            <!-- Canvas is optional here, maybe subtle particles overlay -->
+            <canvas id="cyberCanvas"
+                style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></canvas>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="content-section">
+            <div class="section-header">
+                <h2>> ABOUT_UNIT</h2>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+                <div style="flex: 1; min-width: 300px;">
+                    <p style="margin-bottom: 20px; font-size: 1.1rem; color: #ccc;">
+                        <span style="color: var(--primary-neon); font-weight: bold;">[BIO_LOG]:</span>
+                        Actuellement en formation de développement web, je suis fasciné par la technologie et le design
+                        cyberpunk.
+                        Je cherche à transformer mes connaissances académiques en expériences utilisateurs concrètes.
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        Autodidacte curieux et étudiant rigoureux, je maîtrise les bases du code et explore constamment
+                        de nouveaux frameworks.
+                        Mon but : intégrer une équipe dynamique pour relever de nouveaux défis.
+                    </p>
+                    <div style="margin-top: 30px; border: 1px solid #333; padding: 20px; background: rgba(0,0,0,0.5);">
+                        <h3
+                            style="color: var(--secondary-neon); margin-bottom: 15px; font-family: var(--font-display);">
+                            > SKILL_LOADING...</h3>
+
+                        <!-- Stat 1 -->
+                        <div style="margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>MOTIVATION</span>
+                                <span style="color: var(--primary-neon);">100%</span>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: #222;">
+                                <div
+                                    style="width: 100%; height: 100%; background: var(--primary-neon); box-shadow: 0 0 10px var(--primary-neon);">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stat 2 -->
+                        <div style="margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>FRONTEND (HTML/CSS/JS)</span>
+                                <span style="color: var(--accent-neon);">85%</span>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: #222;">
+                                <div
+                                    style="width: 85%; height: 100%; background: var(--accent-neon); box-shadow: 0 0 10px var(--accent-neon);">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stat 3 -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>BACKEND (NODE/PHP)</span>
+                                <span style="color: var(--secondary-neon);">30%</span>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: #222;">
+                                <div
+                                    style="width: 30%; height: 100%; background: var(--secondary-neon); box-shadow: 0 0 10px var(--secondary-neon);">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decorative Image/Element placeholder -->
+                <div style="flex: 1; min-width: 300px; position: relative;">
+                    <div
+                        style="border: 2px solid var(--secondary-neon); padding: 10px; clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);">
+                        <img src="tenor.gif" alt="Cyberpunk Animation"
+                            style="width: 100%; height: 300px; object-fit: cover; display: block;">
+                    </div>
+                    <div
+                        style="position: absolute; bottom: -20px; right: -20px; color: var(--accent-neon); font-size: 4rem; opacity: 0.2; font-family: var(--font-display);">
+                        01
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE SECTION -->
+        <section id="experience" class="content-section">
+            <div class="section-header">
+                <h2>> EDUCATION_LOG</h2>
+            </div>
+
+            <div class="timeline">
+                <!-- Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="card-cyber">
+                        <span class="date">2023 - PRESENT</span>
+                        <h3>BACHELOR DEVELOPPEUR WEB</h3>
+                        <span class="role">@ ECOLE_DU_NUMERIQUE</span>
+                        <p>Apprentissage intensif des langages du web, UX/UI Design et gestion de projet Agile.</p>
+                        <div class="tech-stack">
+                            <span>#HTML/CSS</span> <span>#JS</span> <span>#PHP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="card-cyber">
+                        <span class="date">2022 - 2023</span>
+                        <h3>STAGE DECOUVERTE IT</h3>
+                        <span class="role">@ TECH_AGENCY</span>
+                        <p>Observation et assistance sur des projets d'intégration web. Première approche du monde
+                            professionnel.</p>
+                        <div class="tech-stack">
+                            <span>#WORDPRESS</span> <span>#SEO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="content-section">
+            <div class="section-header">
+                <h2>> UPGRADES_INSTALLED</h2>
+            </div>
+
+            <div class="skills-container">
+                <div class="skill-box">
+                    <i class="fab fa-js"></i>
+                    <span>JS</span>
+                </div>
+                <div class="skill-box">
+                    <i class="fab fa-react"></i>
+                    <span>REACT</span>
+                </div>
+                <div class="skill-box">
+                    <i class="fab fa-html5"></i>
+                    <span>HTML</span>
+                </div>
+                <div class="skill-box">
+                    <i class="fab fa-css3-alt"></i>
+                    <span>CSS</span>
+                </div>
+                <div class="skill-box">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>CYBERSEC</span>
+                </div>
+                <div class="skill-box">
+                    <i class="fas fa-terminal"></i>
+                    <span>DEVOPS</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="content-section">
+            <div class="section-header">
+                <h2>> INITIALIZE_COMMS</h2>
+            </div>
+            <div
+                style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-bottom: 50px; width: 100%;">
+                <a href="mailto:alexis.leroi@email.com" class="skill-box"
+                    style="text-decoration: none; min-width: 200px; flex: 1; max-width: 300px; display: block;">
+                    <i class="fas fa-envelope"></i>
+                    <span>EMAIL ME</span>
+                </a>
+                <a href="https://github.com/alexisleroi" target="_blank" class="skill-box"
+                    style="text-decoration: none; min-width: 200px; flex: 1; max-width: 300px; display: block;">
+                    <i class="fab fa-github"></i>
+                    <span>GITHUB</span>
+                </a>
+                <a href="https://www.linkedin.com/in/alexis-leroi-visitclub" target="_blank" class="skill-box"
+                    style="text-decoration: none; min-width: 200px; flex: 1; max-width: 300px; display: block;">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LINKEDIN</span>
+                </a>
+            </div>
+
+
+
+    </main>
+
+    <footer style="text-align: center; padding: 20px; color: #555; font-size: 0.8rem; border-top: 1px solid #222;">
+        SYSTEM_VER_2.4 // © 2026 ALExis leroi
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
