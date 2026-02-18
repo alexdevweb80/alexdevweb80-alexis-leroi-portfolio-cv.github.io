@@ -204,6 +204,13 @@ header {
     border-color: #fff;
 }
 
+.btn-cyber.small {
+    padding: 8px 20px;
+    font-size: 0.75rem;
+    margin-top: 15px;
+    border-width: 1px;
+}
+
 /* --- SECTIONS COMMON --- */
 section.content-section {
     padding: 80px 10%;
@@ -651,6 +658,10 @@ body {
         padding: 0 5%;
         align-items: center;
         justify-content: center;
+        height: auto;
+        min-height: 100vh;
+        padding-top: 80px;
+        /* Header space */
     }
 
     .hero-content {
@@ -664,9 +675,10 @@ body {
     }
 
     .hero-content h1 {
-        font-size: 2.2rem;
         word-wrap: break-word;
         /* Prevent overflow */
+        font-size: clamp(2rem, 8vw, 2.5rem);
+        /* Responsive font size */
     }
 
     .glitch-large {
@@ -678,6 +690,8 @@ body {
         margin: 10px 0 0 0;
         display: block;
         text-align: center;
+        box-sizing: border-box;
+        /* Fix width calculation */
     }
 
     .btn-cyber.outline {
@@ -690,18 +704,45 @@ body {
         /* Extra bottom padding for nav */
     }
 
-    /* Timeline */
+    /* Timeline Mobile adjustments */
+    .timeline {
+        padding-left: 0;
+        /* Removing extra padding */
+    }
+
     .timeline::before {
-        left: 20px;
+        left: 10px;
+        /* Tighter line */
     }
 
     .timeline-item {
-        padding-left: 50px;
+        padding-left: 35px;
+        /* Less indentation */
         margin-bottom: 40px;
     }
 
     .timeline-dot {
-        left: 14px;
+        left: 4px;
+    }
+
+    .card-cyber {
+        padding: 20px 15px;
+        /* Optimize space inside card */
+    }
+
+    .card-cyber h3 {
+        font-size: 1.1rem;
+        /* Slightly smaller title */
+    }
+
+    .tech-stack span {
+        font-size: 0.75rem;
+        padding: 3px 6px;
+    }
+
+    /* Skills Grid: Allow 2 columns on small screens */
+    .skills-container {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 }
 
@@ -723,16 +764,24 @@ body {
         font-size: 1.8rem;
     }
 
+    /* Even tighter timeline for very small screens */
     .timeline-item {
-        padding-left: 35px;
+        padding-left: 30px;
     }
 
-    .timeline::before {
-        left: 10px;
+    .card-cyber .date {
+        position: relative;
+        top: auto;
+        right: auto;
+        display: block;
+        margin-bottom: 5px;
+        color: var(--secondary-neon);
     }
 
-    .timeline-dot {
-        left: 4px;
+    /* Make buttons stack properly */
+    .btn-cyber.small {
+        width: 100%;
+        text-align: center;
     }
 }
 
