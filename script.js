@@ -234,3 +234,112 @@ scrollElements.forEach(el => {
     el.classList.add('reveal-on-scroll');
     observer.observe(el);
 });
+
+// --- TERMINAL LOADER SIMULATION ---
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function typeText(el, text, speed = 18) {
+    for (let i = 0; i < text.length; i++) {
+        el.textContent += text[i];
+        el.scrollTop = el.scrollHeight;
+        await sleep(speed + Math.random() * 20);
+    }
+}
+
+async function runTerminalLoader() {
+    const output = document.getElementById('terminal-output');
+    const loader = document.getElementById('terminal-loader');
+    const main = document.getElementById('main-content');
+    if (!output || !loader || !main) return;
+
+    // Promise that resolves when window load fires (all resources loaded)
+    const loadPromise = new Promise(resolve => {
+        if (document.readyState === 'complete') return resolve();
+        window.addEventListener('load', () => resolve(), { once: true });
+    });
+
+    // Advanced sequence helper: supports typing, pauses and deletes
+    async function performSequence(seq) {
+        for (const step of seq) {
+            if (step.type === 'text') {
+                await typeText(output, step.text, step.speed ?? 18);
+            } else if (step.type === 'pause') {
+                await sleep(step.duration);
+            } else if (step.type === 'delete') {
+                const count = step.count === 'all' ? output.textContent.length : step.count;
+                for (let i = 0; i < count; i++) {
+                    output.textContent = output.textContent.slice(0, -1);
+                    output.scrollTop = output.scrollHeight;
+                    await sleep(step.speed ?? 10);
+                }
+            }
+            output.scrollTop = output.scrollHeight;
+        }
+    }
+
+    // Welcome sequence
+    await performSequence([
+        { type: 'text', text: '> Bienvenue sur le portfolio de Alexis Leroi.\n', speed: 20 },
+        { type: 'pause', duration: 450 },
+        { type: 'text', text: '> Préparation de l\'interface...', speed: 16 },
+        { type: 'pause', duration: 300 }
+    ]);
+
+    // Simulated checks before waiting for resources
+    const prechecks = [
+        'Vérification du réseau: [ OK ]',
+        'Chargement des polices: [ OK ]',
+        'Initialisation du rendu: [ OK ]'
+    ];
+
+    for (const line of prechecks) {
+        await typeText(output, '> ' + line + '\n', 14);
+        await sleep(200 + Math.random() * 300);
+    }
+
+    // Wait for actual resource load with a dot animation
+    await typeText(output, '> Attente du chargement des ressources', 16);
+    let dotCount = 0;
+    const dotTimer = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        // update trailing dots
+        output.textContent = output.textContent.replace(/\.{0,3}$/, '');
+        output.textContent += '.'.repeat(dotCount);
+        output.scrollTop = output.scrollHeight;
+    }, 400);
+
+    await loadPromise; // actual wait for window load
+    clearInterval(dotTimer);
+    // finalize the waiting line
+    output.textContent = output.textContent.replace(/\.{0,3}$/, '') + '... OK\n';
+
+    // Continue with startup details and progress bar
+    await typeText(output, '\n> Lancement du script principal...\n', 14);
+
+    // Progress simulation
+    for (let p = 0; p <= 100; p += Math.floor(6 + Math.random() * 14)) {
+        const percent = Math.min(p, 100);
+        const barCount = 20;
+        const filled = Math.round((percent / 100) * barCount);
+        const bar = '[' + '█'.repeat(filled) + ' '.repeat(barCount - filled) + '] ' + percent + '%';
+        // remove previous progress bar line if any
+        output.textContent = output.textContent.replace(/\n?\[.*?\]\s*\d+%\s*$/, '');
+        output.textContent += bar + '\n';
+        output.scrollTop = output.scrollHeight;
+        await sleep(150 + Math.random() * 180);
+    }
+
+    await typeText(output, '\n> Démarrage terminé. Affichage du portfolio...\n', 12);
+    await sleep(500);
+
+    // Hide loader and reveal main
+    loader.classList.add('hidden');
+    loader.setAttribute('aria-hidden', 'true');
+    main.setAttribute('aria-hidden', 'false');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    runTerminalLoader().catch(console.error);
+});

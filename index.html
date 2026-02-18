@@ -18,7 +18,17 @@
 <body>
     <div id="cursor"></div>
     <!-- LOADING SCREEN -->
-
+    <div id="terminal-loader" class="terminal-loader" aria-hidden="false">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <pre id="terminal-output" class="terminal-output" aria-live="polite"></pre>
+            <div id="terminal-cursor" class="terminal-cursor">█</div>
+        </div>
+    </div>
 
     <div class="overlay-grid"></div>
 
@@ -37,7 +47,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content" aria-hidden="true">
         <!-- HERO SECTION (Background Image Here) -->
         <section id="home" class="hero-section">
             <div class="hero-content">
@@ -47,7 +57,7 @@
                 <p>En route pour apprendre le dévoleppement web <br>J'apprends, je code, je crée.</p>
                 <br>
                 <a href="#contact" class="btn-cyber">CONTACT ME</a>
-                <a href="cv.pdf" class="btn-cyber outline">DOWNLOAD CV</a>
+                <a href="#" class="btn-cyber outline">DOWNLOAD CV</a>
             </div>
             <!-- Canvas is optional here, maybe subtle particles overlay -->
             <canvas id="cyberCanvas"
@@ -296,6 +306,5 @@
 
     <script src="script.js"></script>
 </body>
-
 
 </html>
