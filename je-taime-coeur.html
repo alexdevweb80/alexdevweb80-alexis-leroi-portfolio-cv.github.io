@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cœur – Je t'aime</title>
+<style>
+  html,body{margin:0;width:100%;height:100%;background:#05060a;overflow:hidden;overscroll-behavior:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  canvas{position:fixed;inset:0;display:block;width:100%;height:100%;height:100dvh}
+  #hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;
+        font:clamp(10px,2.8vw,12px) system-ui,sans-serif;color:#ffffff40;pointer-events:none;padding:0 16px;bottom:max(14px,env(safe-area-inset-bottom))}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="hint">Clique / touche l'écran pour rejouer</div>
+<script>
+const LOVE = [
+ "Je t'aime","I love you","Te amo","Ti amo","Ich liebe dich","Te quiero","Eu te amo","Ik hou van je",
+ "Jag älskar dig","Jeg elsker dig","Rakastan sinua","Ég elska þig","Kocham cię","Miluji tě","Ľúbim ťa",
+ "Szeretlek","Te iubesc","Волим те","Ljubim te","Volim te","Σ' αγαπώ","Я тебя люблю","Я тебе кохаю",
+ "Mən səni sevirəm","Seni seviyorum","Men seni sevaman","Мен сені сүйемін","Mahal kita","Aku cinta kamu",
+ "Saya cintakan awak","Tôi yêu bạn","รักคุณ","我爱你","愛してる","사랑해","أحبك","אני אוהב אותך",
+ "دوستت دارم","मैं तुमसे प्यार करता हूँ","আমি তোমাকে ভালোবাসি","நான் உன்னை காதலிக்கிறேன்",
+ "నేను నిన్ను ప్రేమిస్తున్నాను","ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ","എനിക്ക് നിന്നെ ഇഷ്ടമാണ്",
+ "මම ඔබට ආදරෙයි","ខ្ញុំស្រលាញ់អ្នក","ຂ້ອຍຮັກເຈົ້າ","ငါမင်းကိုချစ်တယ်","Nakupenda","Ndiyakuthanda",
+ "Ngiyakuthanda","Mo nifẹ rẹ","Ina son ka","Ti voglio bene","Mi amas vin","Te amo","Ahau ko koe",
+ "Aloha au iā ʻoe","Ua alofa ia te oe","Maite zaitut","T'estimo","Gràdh agam ort","Rwy'n dy garu di",
+ "Is breá liom thú","Mahal kita","Ma armastan sind","Es tevi mīlu","Aš tave myliu","Ես սիրում եմ քեզ",
+ "მიყვარხარ","Të dua","Обичам те","Mina rakastan sinua","Nga fa'a roa","Wo ai ni","Hu ri ke kau",
+ "Seni sevýärin","Би чамд хайртай","Мен сені жақсы көремін","Men seni yaxshi ko'raman","Хәйрле көн","Kam ngu pelek",
+ "Ke a go rata","Ndinokuda","Ni gukunda","Nimekupenda","Njẹ ọ dị mma","Mi stima bo","Wi lov yu","Ta gra agam duit"
+];
+
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+let W, H, DPR, words = [], t0 = performance.now();
+
+const heart = (x,y)=> Math.pow(x*x+y*y-1,3) - x*x*y*y*y; // <=0 : dedans
+
+function layout(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  const r = cv.getBoundingClientRect();
+  W = cv.width  = Math.max(1,Math.round(r.width*DPR));
+  H = cv.height = Math.max(1,Math.round(r.height*DPR));
+  const S  = Math.min(W/2.5, H/2.7);
+  const cx = W/2, cy = H/2 + 0.12*S;
+  const inside = (px,py)=> heart((px-cx)/S, -(py-cy)/S) <= 0;
+  words = [];
+  const rects = [];
+  const sizes = [];
+  const sMax = Math.max(0.056*S, 9*DPR), sMin = Math.min(Math.max(0.022*S, 6.5*DPR), sMax*0.7);
+  for(let z=sMax; z>=sMin; z-=Math.max(0.4*DPR,(sMax-sMin)/9)) sizes.push(z);
+  const ok = (x,y,w,h,m)=>{
+    // 12 points sur le rectangle (élargi de m)
+    const xs=[x-m,x+w/2,x+w+m], ys=[y-h-m,y-h/2,y+m*0.4];
+    for(const a of xs) for(const b of ys) if(!inside(a,b)) return false;
+    return true;
+  };
+  for(const size of sizes){
+    ctx.font = `600 ${size}px "Noto Sans","Segoe UI",system-ui,sans-serif`;
+    for(let k=0;k<2500;k++){
+      const text = LOVE[(Math.random()*LOVE.length)|0];
+      const w = ctx.measureText(text).width, h = size*0.95;
+      const x = cx + (Math.random()*2.5-1.25)*S - w/2;
+      const y = cy + (Math.random()*2.5-1.25)*S;
+      const pad = size*0.12;
+      if(!ok(x,y,w,h,pad*0.2)) continue;
+      let hit=false;
+      for(const r of rects){
+        if(x-pad<r.x+r.w && x+w+pad>r.x && y-h-pad<r.y && y+pad*0.5>r.y-r.h){hit=true;break}
+      }
+      if(hit) continue;
+      rects.push({x,y,w,h});
+      // mot de contour ? (si l'élargissement sort du cœur)
+      const m = size*1.6;
+      const edge = !ok(x,y,w,h,m);
+      // angle depuis le haut-centre, sens horaire (démarre en haut à droite)
+      const mx=x+w/2, my=y-h/2;
+      let ang = Math.atan2(mx-cx, -(my-cy+0.25*S)); // 0 = haut
+      if(ang<0) ang+=Math.PI*2;
+      words.push({text,x,y,size,edge,ang,
+        hue: 355+Math.random()*10, light: 48+Math.random()*14,
+        flash:-9, delay:0});
+    }
+  }
+  // ordre d'apparition : contour d'abord (balayage), puis l'intérieur
+  for(const wd of words){
+    wd.delay = wd.edge ? 0.3 + wd.ang/(Math.PI*2)*4.2 + Math.random()*0.25
+                       : 4.4 + Math.random()*5.2;
+  }
+}
+
+let nextFlash = 0;
+function frame(now){
+  const t = (now-t0)/1000;
+  ctx.fillStyle = '#05060a'; ctx.fillRect(0,0,W,H);
+
+  // battement de cœur une fois tout affiché
+  const done = Math.max(0,t-10);
+  const beat = done>0 ? 1 + 0.018*Math.max(0,Math.sin(done*2.6))**6*Math.min(1,done/2) : 1;
+  ctx.save();
+  ctx.translate(W/2, H/2); ctx.scale(beat,beat); ctx.translate(-W/2,-H/2);
+
+  // éclats blancs aléatoires
+  if(t>5 && t>nextFlash){
+    for(let i=0;i<3;i++){ const w=words[(Math.random()*words.length)|0]; if(w) w.flash=t; }
+    nextFlash = t + 0.12 + Math.random()*0.2;
+  }
+
+  ctx.textBaseline='alphabetic';
+  for(const w of words){
+    const a = Math.min(1, Math.max(0,(t-w.delay)/0.7));
+    if(a<=0) continue;
+    const f = Math.max(0, 1-(t-w.flash)/0.9);
+    ctx.font = `600 ${w.size}px "Noto Sans","Segoe UI",system-ui,sans-serif`;
+    const pop = 1 + (1-a)*0.25;
+    ctx.save();
+    ctx.translate(w.x, w.y);
+    ctx.scale(pop,pop);
+    ctx.globalAlpha = a;
+    const l = w.light + f*45, s = 100 - f*70;
+    ctx.fillStyle = `hsl(${w.hue},${s}%,${l}%)`;
+    ctx.shadowColor = f>0 ? `rgba(255,255,255,${f})` : 'rgba(255,30,50,.55)';
+    ctx.shadowBlur = (f>0 ? 14*f : 5)*DPR;
+    ctx.fillText(w.text,0,0);
+    ctx.restore();
+  }
+  ctx.restore();
+  requestAnimationFrame(frame);
+}
+
+let rt; const relayout=()=>{clearTimeout(rt); rt=setTimeout(layout,120)};
+addEventListener('resize', relayout);
+addEventListener('orientationchange', relayout);
+if(window.ResizeObserver) new ResizeObserver(relayout).observe(cv);
+addEventListener('pointerdown', ()=>{ t0=performance.now(); nextFlash=0; words.forEach(w=>w.flash=-9); });
+(document.fonts?.ready||Promise.resolve()).then(()=>{ layout(); t0=performance.now(); requestAnimationFrame(frame); });
+</script>
+</body>
+</html>
